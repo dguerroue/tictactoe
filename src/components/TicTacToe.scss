@@ -41,15 +41,17 @@ section.board{
   }
 
   div.game{
+    position: relative;
     display: grid;
     grid-template-areas: "case case case"
                          "case case case"
                          "case case case";
-    grid-gap: 10px;
+    grid-gap: 15px;
     width: 500px;
     height: 500px;
     margin: 50px auto;
-    padding: 5%;
+    padding: 20px;
+    border-radius: 10px;
     background-color: $color-game;
 
     div.case{
@@ -75,36 +77,80 @@ section.board{
         to{transform: scale(1)}
       }
 
+      @keyframes circleAppear{
+        from{transform: scale(0.5)}
+        50%{transform: scale(1.1)}
+        to{transform: scale(1)}
+      }
+      @keyframes crossAppear{
+        from{transform: rotate(-45deg) scale(0.5)}
+        50%{transform: rotate(-45deg) scale(1.1)}
+        to{transform: rotate(-45deg) scale(1)}
+      }
+      @keyframes crossAppear2{
+        from{transform: rotate(45deg) scale(0.5)}
+        50%{transform: rotate(45deg) scale(1.1)}
+        to{transform: rotate(45deg) scale(1)}
+      }
+
       &.cross{
         &::before, &::after{
           position: absolute;
           display: block;
           content: '';
           width: 10%;
-          height: 90%;
+          height: 70%;
           background-color: #212121;
           transform: rotate(-45deg);
+
+          animation: crossAppear .2s linear;  
         }
         &::after{
           transform: rotate(45deg);
+          animation: crossAppear2 .2s linear;  
         }
+
         animation: popIn .2s linear;
       }
       &.circle{
-        &::before, &::after{
+        &::before{
           position: absolute;
           display: block;
           content: '';
-          width: 60%;
-          height: 60%;
+          width: 50%;
+          height: 50%;
           border-radius: 50%;
           border: 13px solid #212121;
-          transform: rotate(-45deg);
+
+          animation: circleAppear .2s linear;  
         }
-        
-        animation: popIn .2s linear;
+
+        animation: popIn .2s linear;        
       }
     }
+  }
+
+  div.game .overlay-win{
+    display: flex;
+    position: absolute;
+    z-index: 10;
+    top: 0; right: 0; bottom: 0; left: 0;
+    justify-content: center;
+    align-items: center;
+    color: #FFF;
+    font-size: 40px;
+    font-weight: 600;
+    text-transform: uppercase;
+    // width: 100%;
+    // height: 100%;
+    background-color: #FFF00077;
+
+    @keyframes fadeAppear {
+      0%{ opacity: 0; }
+      100%{ opacity: 1; }
+    }
+
+    animation: fadeAppear .3s linear;
   }
 
 
