@@ -70,6 +70,9 @@ section.board{
       &:hover{
         background-color: lighten($color-game-case, 10%);
       }
+      &:focus{
+        outline: none;
+      }
 
       @keyframes popIn {
         from{transform: scale(1)}
@@ -135,10 +138,11 @@ section.board{
     position: absolute;
     z-index: 10;
     top: 0; right: 0; bottom: 0; left: 0;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     color: #FFF;
-    font-size: 40px;
+    font-size: 45px;
     font-weight: 600;
     text-transform: uppercase;
     // width: 100%;
@@ -153,5 +157,27 @@ section.board{
     animation: fadeAppear .3s linear;
   }
 
+  div.game .overlay-finish button{
+    position: absolute;
+    bottom: 10%;
+    margin-top: 0px;
+    font-weight: 800;
+    font-size: 100px;
+    background: none;
+    border: none;
+    color: #FFF;
+
+    transition: transform .2s;
+
+    &:hover{
+      cursor: pointer;
+      transform: scale(0.9) rotate(-25deg);
+      transform-origin: center center;
+    }
+    &:focus{
+      outline: none;
+      transform: scale(0.8) rotate(-25deg);
+    }
+  }
 
 }

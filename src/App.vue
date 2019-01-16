@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import TicTacToe from './components/TicTacToe.vue'
+import TicTacToe from './components/TicTacToe.vue';
 
 export default {
   name: 'app',

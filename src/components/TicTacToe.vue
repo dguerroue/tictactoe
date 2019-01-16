@@ -5,28 +5,32 @@
     </header>
     <section class="board">
       <header class="info-bar">
-        <p v-show="!isFinish">Au joueur {{player}} de jouer !</p>
-        <p v-show="isFinish && winner !== null">Le joueur {{player}} à gagné !</p>
-        <p v-show="isFinish && winner == null">Jeu terminé</p>
+        <p v-show="!isFinish">Au joueur {{player == 'circle' ? 'ROND' : 'CROIX'}} de jouer !</p>
+        <p v-show="isFinish && winner !== null">Le joueur {{player == 'circle' ? 'ROND' : 'CROIX'}} à gagné !</p>
+        <p v-show="isFinish && winner == null">Jeu terminé par égalité !</p>
       </header>
       <div class="game" >
-        <div class="overlay-finish" v-if="isFinish && winner !== null">{{player}} win !</div>
-        <div class="overlay-finish" v-if="isFinish && winner == null">Egalité !</div>
+        <div class="overlay-finish" v-if="isFinish && winner !== null">{{player}} win !
+            <button v-show="isFinish" v-on:click="init">&#8634;</button>
+        </div>
+        <div class="overlay-finish" v-if="isFinish && winner == null">égalité !
+            <button v-show="isFinish" v-on:click="init">&#8634;</button>
+        </div>
         <div class="case" 
           v-for="(value,index) in cases" 
           :key="index"
           @click="play(value, index)"
           v-bind:class="{circle: value == 'circle', cross: value == 'cross'}"
         ></div>
-      </div>
-      <div class="buttons">
-        <button v-show="isFinish" v-on:click="init">Restart</button>
+        
       </div>
     </section>
   </div>
 </template>
 
 <script>
+import {db} from '../main';
+
 export default {
   name: 'TicTacToe',
   data: function(){
@@ -49,9 +53,13 @@ export default {
       moves: 0,
     }
   },
+  firestore: function() {
+    return{
+      data: db.collection('tictactoe-data')
+    }
+  },
   methods: {
     init(){
-      console.warn('init');
       this.player = 'circle';
       this.isFinish = false;
       this.winner = null;
@@ -62,19 +70,16 @@ export default {
     },
     play(value, index){
       //DEBUG : console.log(`click ${index} value : ${value}`)
-
-
       if(value === null && this.isFinish == false){
         this.cases[index] = this.player;
         this.moves++;
 
-          this.checkFinish();
-          if(this.isFinish == false){
-            
-            this.changePlayer();
-          }
+        this.checkFinish();
+        if(this.isFinish == false){
+          
+          this.changePlayer();
+        }
       }
-      console.log(`moves : ${this.moves}`);
     },
     changePlayer(){
       this.player = this.player == 'circle' ? 'cross' : 'circle';
