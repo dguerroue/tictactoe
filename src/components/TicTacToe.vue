@@ -29,8 +29,6 @@
 </template>
 
 <script>
-import {db} from '../main';
-
 export default {
   name: 'TicTacToe',
   data: function(){
@@ -51,11 +49,6 @@ export default {
         case8: null,
       },
       moves: 0,
-    }
-  },
-  firestore: function() {
-    return{
-      data: db.collection('tictactoe-data')
     }
   },
   methods: {
