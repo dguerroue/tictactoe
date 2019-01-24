@@ -29,11 +29,11 @@
 </template>
 
 <script>
-import {db} from '../main';
+import db from '../firebase';
 
 export default {
   name: 'TicTacToe',
-  data: function(){
+  data (){
     return {
       name: 'TicTacToe',
       player: 'circle', //'cross' or 'circle'
@@ -53,10 +53,12 @@ export default {
       moves: 0,
     }
   },
-  firestore: function() {
-    return{
-      data: db.collection('tictactoe-data')
-    }
+  created (){
+    db.collection('tictactoe-data').get().then(query => {
+      query.forEach(doc => {
+        console.log(doc.data())
+      })
+    })
   },
   methods: {
     init(){
