@@ -9,5 +9,7 @@ let config = {
   storageBucket: "tictactoe-1155e.appspot.com",
   messagingSenderId: "1017207469913"
 };
+
 const firebaseApp = Firebase.initializeApp(config);
+
 export default firebaseApp.firestore();

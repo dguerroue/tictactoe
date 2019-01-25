@@ -1,20 +1,3 @@
-//*** COLORS
-//******************
-$color-bg-light: #FAF8EF;
-$color-bg-dark: darken($color-bg-light, 10%);
-$color-game: #B9ADA1;
-$color-game-case: #CAC0B4;
-
-//*** COLORS-END
-
-
-//*** GENERAL
-//*******************
-*{
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-//*** GENERAL-END
 .ttt{
   height: 100%;
   background-color: $color-bg-light;
@@ -53,6 +36,15 @@ section.board{
     padding: 20px;
     border-radius: 10px;
     background-color: $color-game;
+
+    @media screen and (max-width: 600px){
+      width: 350px;
+      height: 350px;
+    }
+    @media screen and (max-width: 400px){
+      width: 250px;
+      height: 250px;
+    }
 
     div.case{
       display: flex;
