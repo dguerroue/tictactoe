@@ -37,9 +37,17 @@ section.board{
     border-radius: 10px;
     background-color: $color-game;
 
+    @media screen and (max-width: 1400px){
+      width: 400px;
+      height: 400px;
+    }
     @media screen and (max-width: 600px){
       width: 350px;
       height: 350px;
+    }
+    @media screen and (max-width: 480px){
+      width: 300px;
+      height: 300px;
     }
     @media screen and (max-width: 400px){
       width: 250px;
@@ -117,10 +125,20 @@ section.board{
           border-radius: 50%;
           border: 13px solid #212121;
 
-          animation: circleAppear .2s linear;  
+          animation: circleAppear .2s linear;
+
+          @media screen and (max-width: 600px){
+            border-width: 11px;
+          }
+          @media screen and (max-width: 480px){
+            border-width: 8px;
+          }
+          @media screen and (max-width: 400px){
+            border-width: 7px;
+          }
         }
 
-        animation: popIn .2s linear;        
+        animation: popIn .2s linear;
       }
     }
   }
