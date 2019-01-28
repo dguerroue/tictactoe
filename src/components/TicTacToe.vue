@@ -31,6 +31,11 @@
 <script>
 import db from '@/firebase/init'
 
+//Create all references to the database
+const refColl = db.collection('tictactoe-data');
+const refData = db.collection('tictactoe-data').doc('data')
+const refCases = db.collection('tictactoe-data').doc('cases')
+
 export default {
   name: 'TicTacToe',
   data (){
@@ -56,14 +61,15 @@ export default {
     }
   },
   created() {
-    let ref = db.collection('tictactoe-data');
+    //Get collection in realtime
+    refColl.onSnapshot(snapshot => {
 
-    ref.onSnapshot(snapshot => {
-
+      // Check for each doc changes, modify data and cases
       snapshot.docChanges().forEach(change => {
 
         let doc = change.doc
 
+        //Modify data and cases
         if(doc.id == 'cases') {
           //DEBUG : console.log(doc.data())
           this.cases = doc.data()
@@ -75,9 +81,8 @@ export default {
     })
   },
   methods: {
+    // Init all variables and updates them on database
     init(){
-      let refData = db.collection('tictactoe-data').doc('data')
-      let refCases = db.collection('tictactoe-data').doc('cases')
 
       this.data.player = 'circle';
       this.data.isFinish = false;
@@ -88,40 +93,43 @@ export default {
         this.cases[index] = null;
       }
 
+      //Update documents on databases
       refData.update(this.data)
       refCases.update(this.cases)
     },
+    //For each case's click get it's value and index
     play(value, index){
       //DEBUG : console.log(`click ${index} value : ${value}`)
-      let refCases = db.collection('tictactoe-data').doc('cases')
-      let refData = db.collection('tictactoe-data').doc('data')
 
       if(value === null && this.data.isFinish == false){
         
+        //If the case is empty and game not finished, assign player name to the case
         this.cases[index] = this.data.player;
-
-
+        //increment moves
         this.data.moves++;
 
+        //Update documents on databases
         refData.update(this.data)
         refCases.update(this.cases)
 
-        this.checkFinish();
+        //check if the game is win or equality after 3 moves minimum
+        if(this.data.moves >= 3) {
+          this.checkFinish();
+        }
         if(this.data.isFinish == false){
           this.changePlayer();
         }
       }
     },
     changePlayer(){
-      let refData = db.collection('tictactoe-data').doc('data')
-
+      //change player avec each move
       this.data.player = this.data.player == 'circle' ? 'cross' : 'circle';
 
+      //update player on realtime database
       refData.update(this.data)
     },
     checkFinish(){
-      let refData = db.collection('tictactoe-data').doc('data')
-      //check player circle
+      //check if player circle won
       if(
         (this.cases.case0 == 'circle' && this.cases.case1 == 'circle' && this.cases.case2 == 'circle') ||
         (this.cases.case3 == 'circle' && this.cases.case4 == 'circle' && this.cases.case5 == 'circle') ||
@@ -136,7 +144,7 @@ export default {
         this.data.winner = 'circle';
       }
 
-      //check player cross
+      //check if player cross won
       if(
         (this.cases.case0 == 'cross' && this.cases.case1 == 'cross' && this.cases.case2 == 'cross') ||
         (this.cases.case3 == 'cross' && this.cases.case4 == 'cross' && this.cases.case5 == 'cross') ||
@@ -151,9 +159,10 @@ export default {
         this.data.winner = 'cross';
       }
 
-      //if equality
+      //check if equality
       if(this.data.moves == 9){this.data.isFinish = true}
 
+      //update data on realtime database
       refData.update(this.data)
     }
   }
