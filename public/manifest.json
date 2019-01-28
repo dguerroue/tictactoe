@@ -1,6 +1,6 @@
 {
-  "name": "vue-ttt",
-  "short_name": "vue-ttt",
+  "name": "TicTacToe",
+  "short_name": "TicTacToe",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
