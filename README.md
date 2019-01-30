@@ -1,29 +1,9 @@
 # vue-ttt
+## TicTacToe game
 
-## Project setup
-```
-npm install
-```
+Un petit jeu de morpion pour m'exercer au framework [VueJS](https://vuejs.org/).
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Pouer aller un peu plus loin j'ai pu y implementer un accès en temps réel à une base de donnée [firebase](https://firebase.google.com/) pour rendre le jeu "multijoueur".
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Demo : https://lab.guerroue.fr/vuejs/ttt/
